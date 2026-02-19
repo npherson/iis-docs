@@ -78,13 +78,13 @@ Change the location of an IIS log file to a remote share as follows:
 <a id="02"></a>
 ## Delete Old Log Files by PowerShell Script
 
-You can use a PowerShell script periodicaly to delete log files older than a specified number of days. While you can manually run the script, you could create a scheduled task to run it on a schedule.
+You can use a PowerShell script periodicaly to delete log files older than a specified number of days. While you can manually run the script, you could create a scheduled task to run every day so aged logs are always deleted.
 
 This example script will search all subfolders under the path specified in $logPath for .log files older than the number of days specified in $daysToKeep and **delete them**.
 
 [!code-powershell[Main](managing-iis-log-file-storage/samples/sample1.ps1)]
 
-You can manually create a scheduled task in Task Scheduler or from an elevated PowerShell prompt. For example, if the script was saved to C:\inet\logs\IISCleanup.ps1, you could use the following commands to create a scheduled task that runs the script daily at 2:00AM as system:
+You can manually create a scheduled task in Task Scheduler or from an elevated PowerShell prompt. For example, if the script was saved to C:\inetpub\logs\IISCleanup.ps1, you could use the following commands to create a scheduled task that runs the script daily at 2:00AM as system:
 ```powershell
 $scriptPath = "C:\inetpub\logs\IISLogCleanup.ps1"
 $action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File $scriptPath"
