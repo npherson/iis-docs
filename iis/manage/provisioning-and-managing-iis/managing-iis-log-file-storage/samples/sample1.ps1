@@ -1,5 +1,5 @@
 ###########################################################################################################
-# This is an example script for cleaning up old IIS Log Files desiged to run as a scheduled task.
+# This is an example script for cleaning up old IIS Log Files designed to run as a scheduled task.
 #
 # Example powershell for scheduling the script to run every day at 2:00 AM as system. Adjust file path and user as appropriate.
 # $scriptPath = "C:\inetpub\logs\IISLogCleanup.ps1"
