@@ -10,9 +10,9 @@ ms.custom: sfi-image-nochange
 ---
 # Managing IIS Log File Storage
 
-by [Jim van de Erve](https://twitter.com/jimvde)
+by [Jim van de Erve](https://twitter.com/jimvde) and [Nash Pherson](https://github.com/npherson)
 
-You can manage the amount of server disk space that Internet Information Services (IIS) log files consume by using compression, remote storage, and scripted deletion.
+You can manage the amount of server disk space that Internet Information Services (IIS) log files consume by using compression, remote storage, and scripted deletion of aged log files.
 
 ## Overview
 
@@ -34,7 +34,7 @@ For more information, see [Configuring Logging in IIS](configure-logging-in-iis.
 <a id="00"></a>
 ## Enable Folder Compression
 
-IIS log files are text which is highly compressable - they can shrink to about 2% of their original size. Using administrator permissions, you can enable compression of a log file as follows.
+IIS log files are text which is highly compressable; they can shrink to about 2% of their original size. With administrator permissions, you can enable compression of a log file as follows.
 
 1. Click the **File Manager** icon in the icon bar.
 2. Move to the folder containing IIS log files (by default, `%SystemDrive%\inetpub\logs\LogFiles`).
@@ -45,7 +45,7 @@ IIS log files are text which is highly compressable - they can shrink to about 2
 6. Click **Apply**, and then select whether to compress the folder only, or the folder, its subfolders, and its files.
 7. Click **OK**. Verify that the folder contents are compressed. The name of the folder and the name of each file should be colored blue, and the size of a compression file should be smaller.
 
-This is a simple way to lower disk usage. It is not a final solution, however, because disk usage still grows over time, and could eventually fill up the hard drive.
+This is a simple way to lower disk usage. It is not a final solution, however, because disk usage still grows over time, and could eventually fill up the drive.
 
 If the folder already contains a significant amount of data, it could take the computer a while to compress its contents. Also note that this one-time process could slow down the computer during the initial compression, so if this is a production server, perform this operation during off-peak hours to prevent service degradation.
 
@@ -74,14 +74,15 @@ Change the location of an IIS log file to a remote share as follows:
 7. In the **Actions** pane, click **Apply**, and then click **OK**. All Web sites within the directory should begin logging data to the remote share.
 
     For more information, see [Remote Logging](https://technet.microsoft.com/library/cc786172(v=ws.10).aspx).
+   
 <a id="02"></a>
 ## Delete Old Log Files by PowerShell Script
 
-You can use a PowerShell script periodicaly to to delete log files older than a specified number of days. While you can manually run the script, you could create a scheduled task to run it on a schedule.
+You can use a PowerShell script periodicaly to delete log files older than a specified number of days. While you can manually run the script, you could create a scheduled task to run it on a schedule.
 
-[!code-vb[Main](managing-iis-log-file-storage/samples/sample1.ps1)]
+This example script will search all subfolders under the path specified in $logPath for .log files older than the number of days specified in $daysToKeep and **delete them**.
 
-The script above will search all subfolders under the path specified in $logPath for .log files older than the number of days specified in $daysToKeep and delete them.
+[!code-powershell[Main](managing-iis-log-file-storage/samples/sample1.ps1)]
 
 You can manually create a scheduled task in Task Scheduler or from an elevated PowerShell prompt. For example, if the script was saved to C:\inet\logs\IISCleanup.ps1, you could use the following commands to create a scheduled task that runs the script daily at 2:00AM as system:
 ```powershell
