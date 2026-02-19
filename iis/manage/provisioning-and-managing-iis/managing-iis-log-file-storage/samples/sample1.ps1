@@ -5,7 +5,7 @@
 # $scriptPath = "C:\inetpub\logs\IISLogCleanup.ps1"
 # $action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File $scriptPath"
 # $trigger = New-ScheduledTaskTrigger -Daily -At 2:00AM
-# Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "IIS Log CLeanup" -User "NT AUTHORITY\SYSTEM"
+# Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "IIS Log Cleanup" -User "NT AUTHORITY\SYSTEM"
 ###########################################################################################################
 
 
@@ -25,3 +25,4 @@ $oldLogFiles | ForEach-Object {
 
 # Report results...
 Write-Host "Completed cleanup of log files older than $daysToKeep days. Attempted to remove" ($oldLogFiles.Count).ToString("n0") "files," ($measure.Sum / 1MB).ToString("n1") "MB in size."
+
